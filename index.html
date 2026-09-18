@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <link rel="icon" href="data:,">
+  <meta name="description"
+        content="EgoPush: Egocentric Multi-Object Rearrangement for Mobile Robots via Constrained Teacher Observability">
+  <meta name="keywords" content="Egocentric Rearrangement, Multi-Object Rearrangement, Mobile Robots">     
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EgoPush: Egocentric Multi-Object Rearrangement for Mobile Robots via Constrained Teacher Observability</title>
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css?v=review-media-3">
+</head>
+
+
+<body>
+
+
+<section class="hero project-hero">
+  <div class="project-hero-media" aria-hidden="true">
+    <div class="project-hero-video-frame project-hero-video-frame-main">
+      <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-27-hd-poster.webp" id="hero-video-main" class="project-hero-video" muted loop playsinline>
+        <source data-src="./static/media/clip-27-hd.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="project-hero-video-frame project-hero-video-frame-mobile">
+      <video data-managed preload="none" width="1080" height="1920" data-poster="./static/media/clip-28-hd-poster.webp" id="hero-video-mobile" class="project-hero-video" muted loop playsinline>
+        <source data-src="./static/media/clip-28-hd.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <div class="project-hero-overlay" aria-hidden="true"></div>
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered project-hero-content">
+          <h1 class="title is-1 publication-title project-hero-title">
+            EgoPush
+          </h1>
+          <h2 class="title is-2 publication-title project-hero-subtitle"><span class="subtitle-line">Egocentric Multi-Object Rearrangement for Mobile Robots</span> <span class="subtitle-line">via Constrained Teacher Observability</span></h2>
+          
+          <p class="is-size-5">Anonymous Submission</p>
+          <p class="is-size-6" style="margin-top: .75rem;">Supplementary material for peer review</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width teaser no-margin">
+        
+        <h2 class="title is-3">TL;DR</h2>
+        <p class="tldr-summary">
+          EgoPush is a learning framework that enables a mobile robot to perform long-horizon, multi-object non-prehensile rearrangement using only egocentric vision, without relying on global maps, precise localization, or external tracking.        
+        </p>
+        <br>
+        <h2 class="title is-4 has-text-centered">How Do Mobile Robots Rearrange Objects using only Egocentric Vision?</h2>
+        <div class="columns is-vcentered">
+          <div class="column">
+            <h2>Task Formulation</h2>
+            <img width="1600" height="848" loading="lazy" decoding="async" src="./static/media/figure-23.webp" style="width: 100%; height: auto;" alt="Task formulation: TurtleBot3 Burger rearranges colored boxes into a cross using only egocentric vision.">
+          </div>
+          <div class="column" id="real-world-deployment">
+            <h2>EgoPush Deployment in Real-World</h2>
+            <video data-managed preload="none" width="1200" height="626" data-poster="./static/media/clip-44-poster.webp" muted loop controls playsinline aria-label="Real-world deployment with three camera views" style="width: 100%; height: auto;">
+              <source data-src="./static/media/clip-44-web.mp4" type="video/mp4">
+            </video>
+          </div>
+
+        </div>
+        <br>
+        <h2 class="title is-5 has-text-centered">Try it your self!</h2>
+        <div class="box unity-inline-wrap">
+          <p class="unity-embed-note is-size-7 has-text-grey">
+            Click start to load Unity WebGL. Clicking outside the Unity area will stop it. If performance is not ideal, open in new tab.
+          </p>
+          <div class="unity-inline-launch">
+            <button type="button" id="unity-inline-start" class="button is-dark is-rounded">Start Unity Demo</button>
+          </div>
+          <div id="unity-inline-container">
+            <canvas id="unity-inline-canvas" width="1120" height="700" tabindex="-1"></canvas>
+            <div id="unity-inline-loading-bar">
+              <div id="unity-inline-logo"></div>
+              <div id="unity-inline-progress-empty">
+                <div id="unity-inline-progress-full"></div>
+              </div>
+            </div>
+            <div id="unity-inline-warning"></div>
+            <div id="unity-inline-footer">
+              <div id="unity-inline-logo-title"></div>
+              <button type="button" id="unity-inline-fullscreen" aria-label="Enter fullscreen" disabled></button>
+              <div id="unity-inline-build-title">EgoPushDemo</div>
+            </div>
+          </div>
+          <p class="unity-embed-link">
+            <a href="./static/unity/index.html" target="_blank" rel="noopener">Open in new tab</a>
+            <span aria-hidden="true"> | </span>
+            <a href="./troubleshooting.html">Troubleshooting</a>
+          </p>
+        </div>
+        <script>
+          (() => {
+            const canvas = document.getElementById("unity-inline-canvas");
+            const startButton = document.getElementById("unity-inline-start");
+            const unityContainer = document.getElementById("unity-inline-container");
+            const loadingBar = document.getElementById("unity-inline-loading-bar");
+            const progressBarFull = document.getElementById("unity-inline-progress-full");
+            const fullscreenButton = document.getElementById("unity-inline-fullscreen");
+            const warningBanner = document.getElementById("unity-inline-warning");
+            if (!canvas || !startButton || !unityContainer || !loadingBar || !progressBarFull || !fullscreenButton || !warningBanner) return;
+
+            let unityStarted = false;
+            let unityLoading = false;
+            let unityVisible = false;
+            let unityInstanceRef = null;
+            let loaderPromise = null;
+
+            const focusCanvas = () => {
+              try {
+                canvas.focus({ preventScroll: true });
+              } catch (e) {
+                canvas.focus();
+              }
+            };
+
+            const pauseAmbientVideos = () => window.reviewMedia?.setSuspended(true);
+            const resumeAmbientVideos = () => window.reviewMedia?.setSuspended(false);
+
+            ["pointerdown", "mousedown", "touchstart"].forEach((eventName) => {
+              canvas.addEventListener(eventName, () => {
+                if (unityStarted) {
+                  window.setTimeout(focusCanvas, 0);
+                }
+              }, { passive: true });
+            });
+
+            window.addEventListener("focus", () => {
+              if (unityStarted && unityVisible) {
+                focusCanvas();
+              }
+            });
+            document.addEventListener("visibilitychange", () => {
+              if (unityStarted && unityVisible && document.visibilityState === "visible") {
+                focusCanvas();
+              }
+            });
+
+            const unityObserver = new IntersectionObserver((entries) => {
+              entries.forEach((entry) => {
+                unityVisible = entry.isIntersecting;
+                if (!unityStarted) return;
+                if (unityVisible) {
+                  pauseAmbientVideos();
+                  focusCanvas();
+                } else {
+                  resumeAmbientVideos();
+                }
+              });
+            }, { threshold: 0.35 });
+            unityObserver.observe(unityContainer);
+
+            const buildUrl = "./static/unity/Build";
+            const loaderUrl = buildUrl + "/WebGL.loader.js";
+            const ensureLoaderScript = () => {
+              if (typeof createUnityInstance === "function") {
+                return Promise.resolve();
+              }
+              if (loaderPromise) {
+                return loaderPromise;
+              }
+              loaderPromise = new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = loaderUrl;
+                script.onload = resolve;
+                script.onerror = () => reject(new Error("Failed to load Unity WebGL loader."));
+                document.body.appendChild(script);
+              });
+              return loaderPromise;
+            };
+
+            const config = {
+              arguments: [],
+              dataUrl: buildUrl + "/WebGL.data",
+              frameworkUrl: buildUrl + "/WebGL.framework.js",
+              codeUrl: buildUrl + "/WebGL.wasm",
+              streamingAssetsUrl: "./static/unity/StreamingAssets",
+              companyName: "Anon_",
+              productName: "EgoPushDemo",
+              productVersion: "1.0",
+              showBanner: (msg, type) => {
+                const div = document.createElement("div");
+                div.innerHTML = msg;
+                warningBanner.appendChild(div);
+                if (type === "error") {
+                  div.style = "background: red; padding: 10px;";
+                } else {
+                  if (type === "warning") div.style = "background: yellow; padding: 10px;";
+                  setTimeout(() => {
+                    if (warningBanner.contains(div)) warningBanner.removeChild(div);
+                  }, 5000);
+                }
+                warningBanner.style.display = warningBanner.children.length ? "block" : "none";
+              }
+            };
+
+            const resetUnityUi = () => {
+              startButton.disabled = false;
+              startButton.textContent = "Start Unity Demo";
+              progressBarFull.style.width = "0%";
+              loadingBar.style.display = "none";
+              fullscreenButton.disabled = true;
+            };
+
+            const stopUnity = () => {
+              if (!unityStarted || !unityInstanceRef) return;
+              const currentInstance = unityInstanceRef;
+              unityStarted = false;
+              unityInstanceRef = null;
+              fullscreenButton.disabled = true;
+              resumeAmbientVideos();
+              Promise.resolve(currentInstance.Quit ? currentInstance.Quit() : null)
+                .catch(() => {})
+                .finally(() => {
+                  resetUnityUi();
+                });
+            };
+
+            fullscreenButton.onclick = () => {
+              if (unityInstanceRef) {
+                unityInstanceRef.SetFullscreen(1);
+              }
+            };
+
+            document.addEventListener("pointerdown", (event) => {
+              if (!unityStarted || !unityContainer || !event.target) return;
+              if (unityContainer.contains(event.target) || startButton.contains(event.target)) return;
+              stopUnity();
+            }, true);
+
+            startButton.addEventListener("click", () => {
+              if (unityStarted || unityLoading) {
+                if (unityStarted) {
+                  focusCanvas();
+                }
+                return;
+              }
+
+              warningBanner.textContent = "";
+              warningBanner.style.display = "none";
+              unityLoading = true;
+              pauseAmbientVideos();
+              startButton.disabled = true;
+              startButton.textContent = "Loading Unity...";
+              loadingBar.style.display = "block";
+              progressBarFull.style.width = "0%";
+
+              ensureLoaderScript()
+                .then(() => createUnityInstance(canvas, config, (progress) => {
+                  progressBarFull.style.width = 100 * progress + "%";
+                }))
+                .then((unityInstance) => {
+                  unityInstanceRef = unityInstance;
+                  unityStarted = true;
+                  unityLoading = false;
+                  loadingBar.style.display = "none";
+                  startButton.textContent = "Unity Running";
+                  fullscreenButton.disabled = false;
+                  focusCanvas();
+                  if (unityVisible) {
+                    pauseAmbientVideos();
+                  } else {
+                    resumeAmbientVideos();
+                  }
+                })
+                .catch((message) => {
+                  unityLoading = false;
+                  resumeAmbientVideos();
+                  loadingBar.style.display = "none";
+                  startButton.disabled = false;
+                  startButton.textContent = "Start Unity Demo";
+                  const errorMessage = message && message.message ? message.message : message;
+                  warningBanner.textContent = errorMessage;
+                  warningBanner.style.display = "block";
+                });
+            });
+          })();
+        </script>
+        <br>
+        <h2 id="abstract" class="title is-3 has-text-centered">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Humans rearrange objects in cluttered environments using egocentric perception, actively moving to keep task-relevant spatial cues in view. Mobile robots have not matched this: rearrangement is usually built on a global pose estimate or a map, which is exactly what a robot carrying one camera lacks, while pushing keeps changing the scene it would have to be built from. We present EgoPush, which pushes objects into anchor-relative formations from onboard RGB-D alone, with no global localization, external tracking, or map at deployment, and transfers zero-shot to a TurtleBot in controlled and visually cluttered scenes. What makes this learnable turns out to be a property of the teacher rather than of the student: three privileged teachers trained with identical rewards, architecture, and hyperparameters all exceed 98% success, yet their distilled egocentric students reach 0%, 54.8%, and 87.3%, the only variable being the teacher’s observation function. EgoPush therefore trains the teacher under egocentric observability constraints, restricting it to visibility-limited cues and revealing target references only when the anchor is centrally visible, so that its supervision is recoverable by a depth-based student distilled online. Making the teacher trainable in the first place needs two further pieces: a role-grouped object-centric interface shared by teacher and student, and stage-wise temporally decayed rewards for long-horizon credit assignment.
+          </p>
+        </div>
+        <br>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Failure Cases of Baselines</h2>
+        <div class="content has-text-centered">
+          <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-24-poster.webp" muted loop controls playsinline style="width: 100%; height: auto;">
+            
+            <source data-src="./static/media/clip-24-web.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 id="teacher-observability" class="title is-3 has-text-centered">Why Constrain Teacher Observability?</h2>
+        <p class="observability-summary has-text-centered">
+          All three teachers exceed 98% success, but their students range from 0% to <strong>87.30%</strong>.
+        </p>
+        <figure class="observability-chart">
+          <picture>
+            <source media="(max-width: 600px)" srcset="./static/media/teacher-observability-mobile.svg" width="420" height="460">
+            <img src="./static/media/teacher-observability.svg" width="900" height="410" loading="lazy" decoding="async"
+                 alt="Teacher and distilled student success rates. Global observation without FOV: 99.22% and 0%. FOV without center gating: 98.34% and 54.79%. EgoPush with FOV and center gating: 99.31% and 87.30%.">
+          </picture>
+        </figure>
+        <figure id="teacher-observability-video" class="observability-video">
+          <figcaption>Teacher and student rollouts under the three observation settings.</figcaption>
+          <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-46-poster.webp" muted loop controls playsinline aria-label="Teacher and student observation ablations">
+            <source data-src="./static/media/clip-46-web.mp4" type="video/mp4">
+          </video>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">EgoPush Method</h2>
+        <center>
+          <div id="overview">
+            <img width="4304" height="1897" loading="lazy" decoding="async" src="./static/media/figure-03.svg" style="width: 100%; height: auto;" alt="Overview Image">
+          </div>
+        </center>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section how-it-works-section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered ">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">How It Works</h2>
+        <div class="how-it-works-panel">
+          <center class="how-it-works-tabs">
+            <button id="method_button1" class="btn" onclick="changeContent(1)">1. Object-Centric Latent Representation</button>
+            <button id="method_button2" class="btn" onclick="changeContent(2)">2. RL with Constrained Observations</button>
+            <button id="method_button3" class="btn" onclick="changeContent(3)">3. Relational Distillation</button>
+          </center>
+
+          <div class="content has-text-justified how-it-works-content">
+            <p id="text-content"> <b>1.1 Object-Centric Representation:</b>
+              <br><b>(1) Task Roles:</b> EgoPush partitions scene objects into three task roles: active object (currently pushed), anchor object (defines the target relation), and obstacles.
+              <br><b>(2) Role-wise Encoding:</b> A shared-weight estimator encodes each role into a latent embedding, and these embeddings are concatenated as an object-centric latent state.
+              <br><br><b>1.2 Relative Spatial Reasoning:</b>
+              <br><b>(3) Relation-First Representation:</b> Weight sharing places all roles in a common feature space, enabling the policy to reason over relative spatial relations instead of isolated object states.
+            </p>
+            <center>
+              <div id="media-content">
+                <img width="2062" height="1517" loading="lazy" decoding="async" src="./static/media/figure-06.svg" class="method-media-image" />
+                <h3 class="title is-4 has-text-centered" style="margin-top: 0.75rem; margin-bottom: 0;">Object-Centric Representation</h3>
+              </div>
+            </center>
+          </div>
+        </div>
+
+        <script>
+          document.getElementById('method_button1').classList.add('active');
+          function changeContent(buttonNumber) {
+              const textElement = document.getElementById('text-content');
+              const mediaElement = document.getElementById('media-content');
+
+              document.getElementById('method_button1').classList.remove('active');
+              document.getElementById('method_button2').classList.remove('active');
+              document.getElementById('method_button3').classList.remove('active');
+
+              document.getElementById('method_button' + buttonNumber).classList.add('active');
+
+              if (buttonNumber === 1) {
+                  textElement.innerHTML = "<b>1.1 Object-Centric Representation:</b> \
+                                          <br><b>(1) Task Roles:</b> EgoPush partitions scene objects into three task roles: active object (currently pushed), anchor object (defines the target relation), and obstacles. \
+                                          <br><b>(2) Role-wise Encoding:</b> A shared-weight estimator encodes each role into a latent embedding, and these embeddings are concatenated as an object-centric latent state. \
+                                          <br><br><b>1.2 Relative Spatial Reasoning:</b> \
+                                          <br><b>(3) Relation-First Representation:</b> Weight sharing places all roles in a common feature space, enabling the policy to reason over relative spatial relations instead of isolated object states.";
+                  mediaElement.innerHTML = `<img width="2062" height="1517" loading="lazy" decoding="async" src="./static/media/figure-06.svg" class="method-media-image" />
+                                            <h3 class="title is-4 has-text-centered" style="margin-top: 0.75rem; margin-bottom: 0;">Object-Centric Representation</h3>`;
+              } else if (buttonNumber === 2) {
+                  textElement.innerHTML = "<b>2.1 Teacher Observation Design:</b> \
+                                          <br><b>(1) Sparse Keypoints:</b> In Phase 1, the teacher observes grouped sparse keypoints (active, anchor, obstacle) that capture object geometry and relative poses, keeping observations low-dimensional and sample-efficient; a reference keypoint set is additionally provided as a spatial guide for pose alignment. \
+                                          <br><b>(2) Virtual Egocentric FOV Masking:</b> Keypoints outside a robot-pose-based frustum or range limit are masked to approximate what an egocentric camera can recover. \
+                                          <br><b>(3) Center-Gated Reference Visibility:</b> The reference keypoints are revealed only when the anchor is visible and near the image center, preventing the teacher from exploiting its extra reference signal without reliable anchor evidence. \
+                                          <br><b>(4) Learnable Active Perception:</b> These constraints force the teacher to keep task-critical cues observable, producing trajectories the student can imitate. \
+                                          <br><br><b>2.2 Long-Horizon Credit Assignment:</b> \
+                                          <br><b>(5) Stage-Aligned Completion Rewards:</b> The long-horizon task is decomposed into repeated reach-then-place stages, and each completion reward is time-weighted by the remaining per-stage step budget (with a stage-local timer), which improves within-stage credit assignment and encourages timely completion.";
+                  mediaElement.innerHTML = `
+                    <h3 class="title is-4 has-text-centered" style="margin-bottom: 0.75rem;">Constrained Observations for RL Teacher</h3>
+                    <div class="columns is-mobile is-variable is-2" style="margin: 0;">
+                      <div class="column" style="padding-top: 0;">
+                        <p style="margin-bottom: 0.5rem; font-weight: 600; text-align: center;">(1) Virtual FOV</p>
+                        <div style="aspect-ratio: 4 / 3; width: 100%; overflow: hidden;">
+                          <img width="1772" height="1400" loading="lazy" decoding="async" src="./static/media/figure-01.svg" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
+                        </div>
+                      </div>
+                      <div class="column" style="padding-top: 0;">
+                        <p style="margin-bottom: 0.5rem; font-weight: 600; text-align: center;">(2) Center-Gated Visibility (C-GV)</p>
+                        <div style="aspect-ratio: 4 / 3; width: 100%; overflow: hidden;">
+                          <img width="1949" height="1402" loading="lazy" decoding="async" src="./static/media/figure-02.svg" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: block;" />
+                        </div>
+                      </div>
+                    </div>`;
+              } else if (buttonNumber === 3) {
+                  textElement.innerHTML = "<b>3.1 Egocentric Student Inputs:</b> \
+                                          <br><b>(1) RGB for Grouping, Depth for Policy:</b> In Phase 2, RGB is used to obtain instance masks and assign task roles, while the policy consumes grouped depth layers for active, anchor, and obstacle. \
+                                          <br><b>(2) Online Distillation:</b> The student is trained with an online DAgger-style process that queries teacher actions at visited states, instead of relying only on offline behavior cloning. \
+                                          <br><br><b>3.2 Relational Distillation:</b> \
+                                          <br><b>(3) Cross-Modal Alignment:</b> EgoPush is trained with direct action loss and adds relational alignment as an auxiliary signal. \
+                                          <br><b>(4) Similarity-Matrix Supervision:</b> Beyond action cloning, it matches the pairwise cosine-similarity matrix over shared groups (active, anchor, obstacle) between teacher and student to compensate for the teacher's extra reference signal, helping the student inherit target-seeking spatial reasoning without explicit reference input.";
+                  mediaElement.innerHTML = `<img width="960" height="724" loading="lazy" decoding="async" src="./static/media/relational-distillation.webp" class="method-media-image relational-distillation-image" alt="Relational distillation: teacher and student each form a cosine-similarity matrix over active, anchor, and obstacle representations; the relational loss aligns these matrices." />`;
+              }
+          }
+        </script>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Results in Simulation</h2>
+        <div class="columns is-variable is-1">
+          <div class="column is-half">
+            <div class="content has-text-centered">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-25-poster.webp" muted loop controls playsinline style="width: 100%; height: auto;">
+                
+                <source data-src="./static/media/clip-25-web.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="content has-text-centered">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-45-poster.webp" muted loop controls playsinline style="width: 100%; height: auto;">
+                <source data-src="./static/media/clip-45-web.mp4" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3 has-text-centered">Depth Processing and Sim2Real</h2>
+
+        <h3 class="title is-4 has-text-centered">Comparison of Depth Processing Methods</h3>
+        <div class="content has-text-centered">
+          <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-26-poster.webp" muted loop controls playsinline style="width: 100%; height: auto;">
+            
+            <source data-src="./static/media/clip-26-web.mp4" type="video/mp4">
+          </video>
+        </div>
+
+        <section id="real-world-results" aria-labelledby="results-title">
+          <h3 id="results-title" class="title is-4 has-text-centered">Results in Real World</h3>
+          <div class="real-world-grid">
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="550" height="540" data-poster="./static/media/clip-29-poster.webp" controls muted loop playsinline aria-label="Trial 01">
+                <source data-src="./static/media/clip-29-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 01 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="550" height="540" data-poster="./static/media/clip-30-poster.webp" controls muted loop playsinline aria-label="Trial 02">
+                <source data-src="./static/media/clip-30-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 02 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="548" height="548" data-poster="./static/media/clip-31-poster.webp" controls muted loop playsinline aria-label="Trial 04">
+                <source data-src="./static/media/clip-31-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 04 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="548" height="548" data-poster="./static/media/clip-32-poster.webp" controls muted loop playsinline aria-label="Trial 05">
+                <source data-src="./static/media/clip-32-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 05 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="548" height="542" data-poster="./static/media/clip-33-poster.webp" controls muted loop playsinline aria-label="Trial 06">
+                <source data-src="./static/media/clip-33-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 06 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="544" height="544" data-poster="./static/media/clip-34-poster.webp" controls muted loop playsinline aria-label="Trial 07">
+                <source data-src="./static/media/clip-34-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 07 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="544" height="540" data-poster="./static/media/clip-35-poster.webp" controls muted loop playsinline aria-label="Trial 08">
+                <source data-src="./static/media/clip-35-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 08 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="548" height="542" data-poster="./static/media/clip-36-poster.webp" controls muted loop playsinline aria-label="Trial 09">
+                <source data-src="./static/media/clip-36-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 09 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card">
+              <video data-managed preload="none" width="620" height="620" data-poster="./static/media/clip-37-poster.webp" controls muted loop playsinline aria-label="Trial 10">
+                <source data-src="./static/media/clip-37-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 10 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-38-poster.webp" controls muted loop playsinline aria-label="Trial 11">
+                <source data-src="./static/media/clip-38-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 11 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-39-poster.webp" controls muted loop playsinline aria-label="Trial 12">
+                <source data-src="./static/media/clip-39-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 12 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-40-poster.webp" controls muted loop playsinline aria-label="Trial 13">
+                <source data-src="./static/media/clip-40-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 13 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-41-poster.webp" controls muted loop playsinline aria-label="Trial 14">
+                <source data-src="./static/media/clip-41-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 14 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-42-poster.webp" controls muted loop playsinline aria-label="Trial 15">
+                <source data-src="./static/media/clip-42-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 15 · 5×</figcaption>
+            </figure>
+            <figure class="real-world-card real-world-card--wide">
+              <video data-managed preload="none" width="1920" height="1080" data-poster="./static/media/clip-43-poster.webp" controls muted loop playsinline aria-label="Trial 16">
+                <source data-src="./static/media/clip-43-web.mp4" type="video/mp4">
+              </video>
+              <figcaption>Trial 16 · 5×</figcaption>
+            </figure>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+          
+       
+<footer class="footer"><div class="container has-text-centered">
+  <p>Anonymous supplementary material · For peer review only</p>
+  <p class="is-size-7" style="margin-top: 1rem;">Website template adapted from <a href="https://github.com/nerfies/nerfies.github.io" rel="noreferrer">Nerfies</a>.
+  Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noreferrer">CC BY-SA 4.0</a>.</p>
+</div></footer>
+
+<script src="./static/js/real-world.js?v=2"></script>
+</body>
+
+</html>

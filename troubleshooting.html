@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow, noarchive">
+    <meta name="referrer" content="no-referrer">
+    <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EgoPush Troubleshooting</title>
+  
+  
+  
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <style>
+    .troubleshooting-shell {
+      max-width: 880px;
+      margin: 0 auto;
+      border: 1px solid var(--feature-card-border);
+      background: var(--feature-card-bg);
+      box-shadow: var(--feature-card-shadow);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+
+    .troubleshooting-shell code {
+      background: rgba(34, 58, 94, 0.08);
+      border-radius: 4px;
+      padding: 0.1rem 0.35rem;
+    }
+  </style>
+</head>
+<body>
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h1 class="title is-3 has-text-centered">Troubleshooting: WebGL Not Supported?</h1>
+      <div class="troubleshooting-shell content">
+        <p>
+          If you see a WebGL error message, it means your browser cannot access your device's GPU to render
+          the 3D interface. This is common on Linux or when Hardware Acceleration is disabled.
+        </p>
+        <p>Follow these steps to resolve the issue:</p>
+
+        <h2 class="title is-5">Step 1: Enable Hardware Acceleration</h2>
+        <p><strong>Chrome / Edge:</strong></p>
+        <ol>
+          <li>Go to <code>chrome://settings/system</code> (or <code>edge://settings/system</code>).</li>
+          <li>Ensure <strong>"Use graphics acceleration when available"</strong> is toggled <strong>ON</strong>.</li>
+          <li><strong>Restart</strong> the browser completely.</li>
+        </ol>
+
+        <h2 class="title is-5">Step 2: Force WebGL (Common for Linux/NVIDIA users)</h2>
+        <p>
+          If Step 1 did not work, your browser might be blocking your GPU driver due to compatibility checks.
+          You can force it to work:
+        </p>
+        <ol>
+          <li>Type <code>chrome://flags</code> (or <code>edge://flags</code>) in your address bar.</li>
+          <li>Search for <code>Override software rendering list</code>.</li>
+          <li>Change the setting from "Default" to <strong>"Enabled"</strong>.</li>
+          <li>Click the <strong>Relaunch</strong> button that appears at the bottom.</li>
+        </ol>
+      </div>
+
+      <div class="has-text-centered" style="margin-top: 1rem;">
+        <a class="button is-link is-light" href="./">Back to EgoPush Page</a>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
